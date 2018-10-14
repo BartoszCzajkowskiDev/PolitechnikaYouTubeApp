@@ -26,11 +26,9 @@ class MainAdapter(val homeFeed: HomeFeed): RecyclerView.Adapter<CustomViewHolder
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val video = homeFeed.videos.get(position)
-        holder?.view?.textView_video_title?.text = video.channel.name
+        holder?.view?.textView_video_title?.text = video.name
 
-//        holder?.view?.textView_channel_name?.text = video.channel.name + "  •  " + "20K Views\n4 days ago"
-
-
+        holder?.view?.textView_channel_name?.text = video.channel.name + "  •  " + "20K Views\n4 days ago"
 
         val thumbnailImageView = holder?.view?.imageView_video_thumbnail
         Picasso.get().load(video.imageUrl).into(thumbnailImageView)
