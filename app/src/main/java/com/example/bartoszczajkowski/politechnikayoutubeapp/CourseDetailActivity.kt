@@ -23,10 +23,7 @@ class CourseDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-
         recyclerView_main.layoutManager = LinearLayoutManager(this)
-//        recyclerView_main.adapter = CourseDetailAdapter()
-
         val navBarTitle = intent.getStringExtra(CustomViewHolder.VIDEO_TITLE_KEY)
         supportActionBar?.title = navBarTitle
 
@@ -38,9 +35,6 @@ class CourseDetailActivity : AppCompatActivity() {
         val videoId = intent.getIntExtra(CustomViewHolder.VIDEO_ID_KEY, -1)
         val courseDetailURL = "https://api.letsbuildthatapp.com/youtube/course_detail?id=" + videoId
 
-//        val url = "https://api.letsbuildthatapp.com/youtube/home_feed"
-//        val request = Request.Builder().url(url).build()
-
         val client = OkHttpClient()
         val request = Request.Builder().url(courseDetailURL).build()
 
@@ -51,18 +45,11 @@ class CourseDetailActivity : AppCompatActivity() {
             override fun onResponse(call: Call?, response: Response?) {
                 val body = response?.body()?.string()
                 println(body)
-
                 val gson = GsonBuilder().create()
-
                 val courseLessons = gson.fromJson(body, Array<CourseLesson>::class.java)
-
-
-
-                //val homeFeed = gson.fromJson(body, HomeFeed::class.java)
 
                 runOnUiThread {
                     recyclerView_main.adapter = CourseDetailAdapter(courseLessons)
-                    //recyclerView_main.adapter = MainAdapter(homeFeed)
                 }
             }
 
@@ -77,7 +64,6 @@ class CourseDetailActivity : AppCompatActivity() {
         override fun getItemCount(): Int {
             return courseLessons.size
         }
-
         override fun onCreateViewHolder(parent: ViewGroup, p1: Int): CourseLessonViewHolder {
 
             val layoutInflater = LayoutInflater.from(parent?.context)
@@ -85,11 +71,6 @@ class CourseDetailActivity : AppCompatActivity() {
 
             return CourseLessonViewHolder(customView)
         }
-
-//        override fun onBindViewHolder(p0: CourseLessonViewHolder, p1: Int) {
-//
-//        }
-
         override fun onBindViewHolder(holder: CourseLessonViewHolder, position: Int) {
             val courseLesson = courseLessons.get(position)
 
